@@ -17,7 +17,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OrdinalEncoder, FunctionTransformer
+from sklearn.preprocessing import OrdinalEncoder, FunctionTransformer, OneHotEncoder
 
 import wandb
 from sklearn.ensemble import RandomForestRegressor
@@ -101,15 +101,21 @@ def go(args):
     ######################################
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
     # HINT: use mlflow.sklearn.save_model
+    #JWC
     signature = mlflow.models.infer_signature(X_val, y_pred)
+    #JWC
+    artifact_path="random_forest_dir"
     mlflow.sklearn.save_model(
     
     #JWC
     
         sk_pipe,
-        artifact_path="random_forest_dir",  
+        artifact_path,  
     #JWC      
         signature = signature,
+    #JWC
+        serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
+    #JWC
         input_example = X_train.iloc[:5]
     )
     ######################################
@@ -184,7 +190,7 @@ def get_inference_pipeline(rf_config, max_tfidf_features):
     
     #JWC
         SimpleImputer(strategy="most_frequent"),
-        OneHotEncoder(handle_unknown="ignore")
+        OneHotEncoder()
     #JWC
     
     )
