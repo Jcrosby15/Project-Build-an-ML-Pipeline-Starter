@@ -102,20 +102,21 @@ def go(args):
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
     # HINT: use mlflow.sklearn.save_model
     #JWC
-    signature = mlflow.models.infer_signature(X_val, y_pred)
+    #signature = mlflow.models.infer_signature(X_val, y_pred)
     #JWC
     artifact_path="random_forest_dir"
     mlflow.sklearn.save_model(
     
     #JWC
-    
+    #
         sk_pipe,
         artifact_path,  
     #JWC      
-        signature = signature,
+    #    signature = signature,
     #JWC
-        serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
+    #    serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
     #JWC
+    #
         input_example = X_train.iloc[:5]
     )
     ######################################
